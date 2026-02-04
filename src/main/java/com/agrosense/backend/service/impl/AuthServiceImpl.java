@@ -33,6 +33,9 @@ public class AuthServiceImpl implements AuthService {
         if (request.getPassword() == null || request.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password is required");
         }
+        if (request.getDistrictId() == null) {
+            throw new IllegalArgumentException("District ID is required");
+        }
 
         Optional<District> districtOpt = districtRepository.findById(request.getDistrictId());
         if (!districtOpt.isPresent()) {

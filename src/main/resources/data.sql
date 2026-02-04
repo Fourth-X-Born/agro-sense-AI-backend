@@ -1,3 +1,3 @@
-INSERT INTO crops (name) VALUES ('Rice');
-INSERT INTO crops (name) VALUES ('Maize');
-INSERT INTO crops (name) VALUES ('Tomato');
+INSERT IGNORE INTO crops (name) VALUES ('Rice');
+INSERT IGNORE INTO crops (name) VALUES ('Maize');
+INSERT IGNORE INTO crops (name) VALUES ('Tomato');
