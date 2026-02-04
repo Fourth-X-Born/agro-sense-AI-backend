@@ -3,6 +3,8 @@ package com.agrosense.backend.service.impl;
 import com.agrosense.backend.dto.RegisterRequest;
 import com.agrosense.backend.dto.RegisterResponse;
 import com.agrosense.backend.entity.Farmer;
+import com.agrosense.backend.exception.DuplicateResourceException;
+import com.agrosense.backend.exception.ResourceNotFoundException;
 import com.agrosense.backend.entity.District;
 import com.agrosense.backend.repository.FarmerRepository;
 import com.agrosense.backend.repository.DistrictRepository;
@@ -39,14 +41,14 @@ public class AuthServiceImpl implements AuthService {
 
         Optional<District> districtOpt = districtRepository.findById(request.getDistrictId());
         if (!districtOpt.isPresent()) {
-            throw new IllegalArgumentException("District not found");
+            throw new ResourceNotFoundException("District with ID " + request.getDistrictId() + " not found");
         }
 
         if (request.getEmail() != null && farmerRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new DuplicateResourceException("Email already registered");
         }
         if (request.getPhone() != null && farmerRepository.existsByPhone(request.getPhone())) {
-            throw new IllegalArgumentException("Phone already exists");
+            throw new DuplicateResourceException("Phone number already registered");
         }
 
         String passwordHash = passwordEncoder.encode(request.getPassword());

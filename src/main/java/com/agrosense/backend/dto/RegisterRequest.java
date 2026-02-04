@@ -9,5 +9,4 @@ public class RegisterRequest {
     private String phone; // optional
     private String password;
     private Long districtId;
-    
 }
