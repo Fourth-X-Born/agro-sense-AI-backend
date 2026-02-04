@@ -31,6 +31,9 @@ public class Farmer {
     @ManyToOne
     @JoinColumn(name = "district_id", nullable = false)
     private District district;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "crop_id")
+    private Crop crop;
 }
 
