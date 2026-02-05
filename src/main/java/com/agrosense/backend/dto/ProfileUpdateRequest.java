@@ -1,6 +1,7 @@
 package com.agrosense.backend.dto;
 
 public record ProfileUpdateRequest(
-        Long districtId,
-        Long cropId
-) {}
+                String name,
+                Long districtId,
+                Long cropId) {
+}

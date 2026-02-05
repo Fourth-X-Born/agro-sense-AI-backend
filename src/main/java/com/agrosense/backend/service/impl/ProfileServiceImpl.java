@@ -34,16 +34,23 @@ public class ProfileServiceImpl implements ProfileService {
         Farmer farmer = farmerRepository.findById(farmerId)
                 .orElseThrow(() -> new RuntimeException("Farmer not found: " + farmerId));
 
-        District district = districtRepository.findById(request.districtId())
-                .orElseThrow(() -> new RuntimeException("District not found: " + request.districtId()));
-        farmer.setDistrict(district);
+        // Update name if provided
+        if (request.name() != null && !request.name().isBlank()) {
+            farmer.setName(request.name());
+        }
 
+        // Update district if provided
+        if (request.districtId() != null) {
+            District district = districtRepository.findById(request.districtId())
+                    .orElseThrow(() -> new RuntimeException("District not found: " + request.districtId()));
+            farmer.setDistrict(district);
+        }
+
+        // Update crop (can be null to remove crop)
         if (request.cropId() != null) {
             Crop crop = cropRepository.findById(request.cropId())
                     .orElseThrow(() -> new RuntimeException("Crop not found: " + request.cropId()));
             farmer.setCrop(crop);
-        } else {
-            farmer.setCrop(null);
         }
 
         Farmer saved = farmerRepository.save(farmer);
@@ -62,7 +69,6 @@ public class ProfileServiceImpl implements ProfileService {
                 farmer.getDistrict().getId(),
                 farmer.getDistrict().getName(),
                 cropId,
-                cropName
-        );
+                cropName);
     }
 }
