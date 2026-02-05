@@ -9,6 +9,8 @@ import com.agrosense.backend.entity.District;
 import com.agrosense.backend.repository.FarmerRepository;
 import com.agrosense.backend.repository.DistrictRepository;
 import com.agrosense.backend.service.AuthService;
+import com.agrosense.backend.dto.LoginRequest;
+import com.agrosense.backend.dto.LoginResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -65,4 +67,29 @@ public class AuthServiceImpl implements AuthService {
 
         return new RegisterResponse(savedFarmer.getId(), savedFarmer.getName());
     }
+
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+
+        String identifier = request.getIdentifier().trim();
+
+        Farmer farmer = farmerRepository.findByEmail(identifier)
+                .or(() -> farmerRepository.findByPhone(identifier))
+                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+
+        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return new LoginResponse(
+                farmer.getId(),
+                farmer.getName(),
+                farmer.getDistrict().getName(),
+                farmer.getCrop() != null ? farmer.getCrop().getName() : null
+        );
+    }
 }
+
+
+
