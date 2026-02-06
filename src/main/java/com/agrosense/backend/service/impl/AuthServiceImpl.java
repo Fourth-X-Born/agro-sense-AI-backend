@@ -68,28 +68,46 @@ public class AuthServiceImpl implements AuthService {
         return new RegisterResponse(savedFarmer.getId(), savedFarmer.getName());
     }
 
-
     @Override
     public LoginResponse login(LoginRequest request) {
-
-        String identifier = request.getIdentifier().trim();
-
-        Farmer farmer = farmerRepository.findByEmail(identifier)
-                .or(() -> farmerRepository.findByPhone(identifier))
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
-
-        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
-            throw new RuntimeException("Invalid credentials");
+        String identifier = request.getIdentifier();
+        if (identifier == null || identifier.isEmpty()) {
+            throw new IllegalArgumentException("Identifier is required");
+        }
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password is required");
         }
 
+        Optional<Farmer> farmerOpt;
+        // Simple check to distinguish email from phone (can be improved)
+        if (identifier.contains("@")) {
+            farmerOpt = farmerRepository.findByEmail(identifier);
+        } else {
+            farmerOpt = farmerRepository.findByPhone(identifier);
+        }
+
+        if (!farmerOpt.isPresent()) {
+            throw new ResourceNotFoundException("User not found with identifier: " + identifier);
+        }
+
+        Farmer farmer = farmerOpt.get();
+
+        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        String districtName = (farmer.getDistrict() != null) ? farmer.getDistrict().getName() : null;
+        String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
+
+        // Return LoginResponse using HEAD structure
         return new LoginResponse(
                 farmer.getId(),
                 farmer.getName(),
-                farmer.getDistrict().getName(),
-                farmer.getCrop() != null ? farmer.getCrop().getName() : null
+                farmer.getEmail(),
+                farmer.getPhone(),
+                districtName,
+                cropName,
+                null // Token logic not implemented yet
         );
     }
 }
-
-
-

@@ -1,11 +1,12 @@
--- Seed Crops
-INSERT IGNORE INTO crops (name) VALUES ('Rice');
-INSERT IGNORE INTO crops (name) VALUES ('Maize');
-INSERT IGNORE INTO crops (name) VALUES ('Tomato');
-
--- Seed Districts
+INSERT IGNORE INTO districts (name) VALUES ('Ampara');
+INSERT IGNORE INTO districts (name) VALUES ('Anuradhapura');
+INSERT IGNORE INTO districts (name) VALUES ('Badulla');
+INSERT IGNORE INTO districts (name) VALUES ('Batticaloa');
 INSERT IGNORE INTO districts (name) VALUES ('Colombo');
+INSERT IGNORE INTO districts (name) VALUES ('Galle');
 INSERT IGNORE INTO districts (name) VALUES ('Gampaha');
+INSERT IGNORE INTO districts (name) VALUES ('Hambantota');
+INSERT IGNORE INTO districts (name) VALUES ('Jaffna');
 INSERT IGNORE INTO districts (name) VALUES ('Kalutara');
 
 -- Seed a test farmer (for Profile API testing)
