@@ -36,4 +36,3 @@ public class Farmer {
     @JoinColumn(name = "crop_id")
     private Crop crop;
 }
-
