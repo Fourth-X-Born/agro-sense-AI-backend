@@ -20,7 +20,8 @@ public class SecurityConfig {
                                                                 "/api/crops/**",
                                                                 "/api/districts/**",
                                                                 "/api/profile/**",
-                                                                "/api/health")
+                                                                "/api/health",
+                                                                "/api/weather/**")
                                                 .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
                                                 .permitAll()
