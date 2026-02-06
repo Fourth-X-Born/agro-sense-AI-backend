@@ -9,6 +9,8 @@ import com.agrosense.backend.entity.District;
 import com.agrosense.backend.repository.FarmerRepository;
 import com.agrosense.backend.repository.DistrictRepository;
 import com.agrosense.backend.service.AuthService;
+import com.agrosense.backend.dto.LoginRequest;
+import com.agrosense.backend.dto.LoginResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -67,25 +69,45 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public com.agrosense.backend.dto.LoginResponse login(com.agrosense.backend.dto.LoginRequest request) {
-        // 1. Find user by email
-        Farmer farmer = farmerRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
-
-        // 2. Verify password
-        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
-            throw new IllegalArgumentException("Invalid email or password");
+    public LoginResponse login(LoginRequest request) {
+        String identifier = request.getIdentifier();
+        if (identifier == null || identifier.isEmpty()) {
+            throw new IllegalArgumentException("Identifier is required");
+        }
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password is required");
         }
 
-        // 3. Return response (Token can be null for now or generated if JWT is added
-        // later)
-        return new com.agrosense.backend.dto.LoginResponse(
+        Optional<Farmer> farmerOpt;
+        // Simple check to distinguish email from phone (can be improved)
+        if (identifier.contains("@")) {
+            farmerOpt = farmerRepository.findByEmail(identifier);
+        } else {
+            farmerOpt = farmerRepository.findByPhone(identifier);
+        }
+
+        if (!farmerOpt.isPresent()) {
+            throw new ResourceNotFoundException("User not found with identifier: " + identifier);
+        }
+
+        Farmer farmer = farmerOpt.get();
+
+        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        String districtName = (farmer.getDistrict() != null) ? farmer.getDistrict().getName() : null;
+        String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
+
+        // Return LoginResponse using HEAD structure
+        return new LoginResponse(
                 farmer.getId(),
                 farmer.getName(),
                 farmer.getEmail(),
                 farmer.getPhone(),
-                farmer.getDistrict().getName(),
-                farmer.getCrop() != null ? farmer.getCrop().getName() : null,
-                "dummy-token");
+                districtName,
+                cropName,
+                null // Token logic not implemented yet
+        );
     }
 }
