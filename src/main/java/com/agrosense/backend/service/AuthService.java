@@ -5,4 +5,6 @@ import com.agrosense.backend.dto.RegisterResponse;
 
 public interface AuthService {
     RegisterResponse register(RegisterRequest request);
+
+    com.agrosense.backend.dto.LoginResponse login(com.agrosense.backend.dto.LoginRequest request);
 }

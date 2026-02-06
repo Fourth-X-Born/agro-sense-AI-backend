@@ -65,4 +65,24 @@ public class AuthServiceImpl implements AuthService {
 
         return new RegisterResponse(savedFarmer.getId(), savedFarmer.getName());
     }
+
+    @Override
+    public com.agrosense.backend.dto.LoginResponse login(com.agrosense.backend.dto.LoginRequest request) {
+        // 1. Find user by email
+        Farmer farmer = farmerRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        // 2. Verify password
+        if (!passwordEncoder.matches(request.getPassword(), farmer.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        // 3. Return response (Token can be null for now or generated if JWT is added
+        // later)
+        return new com.agrosense.backend.dto.LoginResponse(
+                farmer.getId(),
+                farmer.getName(),
+                farmer.getEmail(),
+                "dummy-token");
+    }
 }

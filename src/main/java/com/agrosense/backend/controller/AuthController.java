@@ -20,4 +20,11 @@ public class AuthController {
         RegisterResponse response = authService.register(request);
         return new ApiResponse<>(true, "Registration successful", response);
     }
+
+    @PostMapping("/login")
+    public ApiResponse<com.agrosense.backend.dto.LoginResponse> login(
+            @RequestBody com.agrosense.backend.dto.LoginRequest request) {
+        com.agrosense.backend.dto.LoginResponse response = authService.login(request);
+        return new ApiResponse<>(true, "Login successful", response);
+    }
 }
