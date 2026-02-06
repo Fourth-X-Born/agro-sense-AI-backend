@@ -79,7 +79,6 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Optional<Farmer> farmerOpt;
-        // Simple check to distinguish email from phone (can be improved)
         if (identifier.contains("@")) {
             farmerOpt = farmerRepository.findByEmail(identifier);
         } else {
@@ -99,7 +98,6 @@ public class AuthServiceImpl implements AuthService {
         String districtName = (farmer.getDistrict() != null) ? farmer.getDistrict().getName() : null;
         String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
 
-        // Return LoginResponse using HEAD structure
         return new LoginResponse(
                 farmer.getId(),
                 farmer.getName(),
@@ -107,7 +105,6 @@ public class AuthServiceImpl implements AuthService {
                 farmer.getPhone(),
                 districtName,
                 cropName,
-                null // Token logic not implemented yet
-        );
+                (String) null);
     }
 }

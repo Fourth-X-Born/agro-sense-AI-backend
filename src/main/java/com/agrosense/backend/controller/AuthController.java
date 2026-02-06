@@ -7,8 +7,6 @@ import com.agrosense.backend.dto.RegisterRequest;
 import com.agrosense.backend.dto.RegisterResponse;
 import com.agrosense.backend.service.AuthService;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ApiResponse<com.agrosense.backend.dto.LoginResponse> login(
-            @RequestBody com.agrosense.backend.dto.LoginRequest request) {
-        com.agrosense.backend.dto.LoginResponse response = authService.login(request);
+    public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.login(request);
         return new ApiResponse<>(true, "Login successful", response);
     }
 }
