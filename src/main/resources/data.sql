@@ -9,7 +9,8 @@ INSERT IGNORE INTO districts (name) VALUES ('Gampaha');
 INSERT IGNORE INTO districts (name) VALUES ('Kalutara');
 
 -- Seed a test farmer (for Profile API testing)
--- Only insert if no farmer exists with id=1
-INSERT IGNORE INTO farmers (id, name, email, phone, password_hash, district_id, crop_id)
-SELECT 1, 'Test Farmer', 'test@example.com', '0771234567', 'test123hash', 1, 1
-WHERE NOT EXISTS (SELECT 1 FROM farmers WHERE id = 1);
+-- COMMENTED OUT: This used a plain-text password hash which breaks BCrypt login
+-- Use the /api/auth/register endpoint to create users with proper BCrypt passwords
+-- INSERT IGNORE INTO farmers (id, name, email, phone, password_hash, district_id, crop_id)
+-- SELECT 1, 'Test Farmer', 'test@example.com', '0771234567', 'test123hash', 1, 1
+-- WHERE NOT EXISTS (SELECT 1 FROM farmers WHERE id = 1);
