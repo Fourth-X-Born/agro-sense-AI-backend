@@ -12,7 +12,6 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 http
-                                .cors(Customizer.withDefaults()) // Enable CORS integration with Spring Security
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
@@ -20,9 +19,8 @@ public class SecurityConfig {
                                                                 "/api/crops/**",
                                                                 "/api/districts/**",
                                                                 "/api/profile/**",
-                                                                "/api/health")
-                                                .permitAll()
-                                                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
+                                                                "/api/health",
+                                                                "/api/market-prices/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .httpBasic(Customizer.withDefaults());
