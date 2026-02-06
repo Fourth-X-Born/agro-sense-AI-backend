@@ -20,7 +20,8 @@ public class SecurityConfig {
                                                                 "/api/districts/**",
                                                                 "/api/profile/**",
                                                                 "/api/health",
-                                                                "/api/market-prices/**")
+                                                                "/api/market-prices/**",
+                                                                "/api/fertilizers/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .httpBasic(Customizer.withDefaults());
