@@ -30,3 +30,35 @@ INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (7, 3, 1, 220.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (8, 3, 2, 215.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (9, 3, 3, 218.00, CURDATE());
+
+-- Seed Fertilizer Recommendations
+-- Rice fertilizers (crop_id = 1)
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (1, 1, 'Urea', 'Nitrogen', '100-150 kg/ha', 'Tillering stage', 'Broadcasting', 'Apply in split doses - 50% at tillering, 50% at panicle initiation');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (2, 1, 'Triple Super Phosphate (TSP)', 'Phosphorus', '50-75 kg/ha', 'Before planting', 'Basal application', 'Apply during land preparation for strong root development');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (3, 1, 'Muriate of Potash (MOP)', 'Potassium', '50-60 kg/ha', 'Tillering stage', 'Side dressing', 'Improves grain quality and disease resistance');
+
+-- Maize fertilizers (crop_id = 2)
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (4, 2, 'Urea', 'Nitrogen', '150-200 kg/ha', 'V6-V8 stage', 'Side dressing', 'Apply when plants are knee-high for maximum growth');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (5, 2, 'DAP (Diammonium Phosphate)', 'Phosphorus', '75-100 kg/ha', 'At planting', 'Band placement', 'Place 5cm below and to the side of seed');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (6, 2, 'Compost', 'Organic', '5-10 tons/ha', 'Before planting', 'Broadcasting', 'Improves soil structure and water retention');
+
+-- Tomato fertilizers (crop_id = 3)
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (7, 3, 'NPK 15-15-15', 'Compound', '300-400 kg/ha', 'Transplanting', 'Basal application', 'Balanced nutrition for early growth');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (8, 3, 'Calcium Ammonium Nitrate (CAN)', 'Nitrogen', '100-150 kg/ha', 'Flowering stage', 'Foliar spray', 'Prevents blossom end rot and improves fruit quality');
+
+INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
+VALUES (9, 3, 'Potassium Sulphate', 'Potassium', '75-100 kg/ha', 'Fruiting stage', 'Fertigation', 'Enhances fruit color and sugar content');
+
