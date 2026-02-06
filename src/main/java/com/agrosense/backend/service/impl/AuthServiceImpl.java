@@ -83,6 +83,9 @@ public class AuthServiceImpl implements AuthService {
                 farmer.getId(),
                 farmer.getName(),
                 farmer.getEmail(),
+                farmer.getPhone(),
+                farmer.getDistrict().getName(),
+                farmer.getCrop() != null ? farmer.getCrop().getName() : null,
                 "dummy-token");
     }
 }
