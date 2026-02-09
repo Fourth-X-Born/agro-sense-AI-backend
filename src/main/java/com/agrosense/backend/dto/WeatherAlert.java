@@ -16,4 +16,6 @@ public class WeatherAlert {
     private String severity; // LOW, MEDIUM, HIGH, CRITICAL
     private String message;
     private List<String> precautions;
+    private String icon; // Material icon name
+    private String validUntil; // e.g., "Until 6:00 PM Tomorrow"
 }
