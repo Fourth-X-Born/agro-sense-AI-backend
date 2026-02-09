@@ -1,5 +1,6 @@
 package com.agrosense.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Farmer {
     @Column(unique = true)
     private String phone; // optional
 
+    @JsonIgnore
     @Column(nullable = false)
     private String passwordHash;
 

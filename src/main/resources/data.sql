@@ -1,3 +1,10 @@
+-- Seed Crops (must be first, referenced by other tables)
+INSERT IGNORE INTO crops (id, name) VALUES (1, 'Rice');
+INSERT IGNORE INTO crops (id, name) VALUES (2, 'Maize');
+INSERT IGNORE INTO crops (id, name) VALUES (3, 'Tomato');
+INSERT IGNORE INTO crops (id, name) VALUES (4, 'Chili');
+INSERT IGNORE INTO crops (id, name) VALUES (5, 'Onion');
+
 INSERT IGNORE INTO districts (name) VALUES ('Ampara');
 INSERT IGNORE INTO districts (name) VALUES ('Anuradhapura');
 INSERT IGNORE INTO districts (name) VALUES ('Badulla');
@@ -182,3 +189,27 @@ VALUES (17, 3, NULL, 'DONT', 'Avoid planting in fields where solanaceous crops w
 
 INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
 VALUES (18, 3, NULL, 'DONT', 'Do not over-irrigate as it causes root diseases and reduces fruit quality', 3);
+
+-- ==========================================
+-- ADMIN TABLE SEED DATA
+-- ==========================================
+-- Note: The 'admins' table is auto-created by JPA/Hibernate from Admin.java entity
+-- Default admin password is 'admin123' (BCrypt hashed)
+-- You can register new admins via /api/admin/auth/register endpoint
+
+-- Create admins table if not exists (for MySQL compatibility)
+CREATE TABLE IF NOT EXISTS admins (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(255) UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    created_at DATETIME,
+    updated_at DATETIME
+);
+
+-- Seed default super admin (password: admin123)
+-- BCrypt hash for 'admin123': $2a$10$N9qo8uLOickgx2ZMRZoMye1eYkVHQl.V8HvT.q4r8Cw8/Tp3q8jUO
+INSERT IGNORE INTO admins (id, name, email, phone, password_hash, role, created_at, updated_at)
+VALUES (1, 'Super Admin', 'admin@agrosense.com', '0771234567', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIH7YxTXjdJj0xrFfWzqQJx7FqQ.WNHK', 'SUPER_ADMIN', NOW(), NOW());

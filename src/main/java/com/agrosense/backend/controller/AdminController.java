@@ -198,4 +198,11 @@ public class AdminController {
         adminService.deleteCropGuideline(id);
         return ResponseEntity.ok(Map.of("message", "Crop guideline deleted successfully"));
     }
+
+    // ==================== FARMER ENDPOINTS (READ-ONLY) ====================
+
+    @GetMapping("/farmers")
+    public ResponseEntity<List<FarmerResponse>> getAllFarmers() {
+        return ResponseEntity.ok(adminService.getAllFarmers());
+    }
 }

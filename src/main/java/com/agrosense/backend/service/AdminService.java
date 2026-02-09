@@ -68,4 +68,7 @@ public interface AdminService {
     void deleteCropGuideline(Long id);
 
     List<CropGuideline> getAllCropGuidelines();
+
+    // Farmer operations (read-only for admin)
+    List<FarmerResponse> getAllFarmers();
 }

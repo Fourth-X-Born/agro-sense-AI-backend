@@ -22,6 +22,7 @@ public class AdminServiceImpl implements AdminService {
     private final CropDetailsRepository cropDetailsRepository;
     private final GrowthStageRepository growthStageRepository;
     private final CropGuidelineRepository cropGuidelineRepository;
+    private final FarmerRepository farmerRepository;
 
     // ==================== CROP OPERATIONS ====================
 
@@ -348,5 +349,15 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(readOnly = true)
     public List<CropGuideline> getAllCropGuidelines() {
         return cropGuidelineRepository.findAll();
+    }
+
+    // ==================== FARMER OPERATIONS (READ-ONLY) ====================
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FarmerResponse> getAllFarmers() {
+        return farmerRepository.findAllWithValidRelations().stream()
+                .map(FarmerResponse::fromEntity)
+                .toList();
     }
 }
