@@ -20,6 +20,8 @@ public class WeatherResponse {
     public static class Main {
         private double temp;
         private double humidity;
+        @JsonProperty("feels_like")
+        private double feelsLike;
     }
 
     @Data
@@ -31,5 +33,6 @@ public class WeatherResponse {
     @Data
     public static class Wind {
         private double speed;
+        private double deg;
     }
 }

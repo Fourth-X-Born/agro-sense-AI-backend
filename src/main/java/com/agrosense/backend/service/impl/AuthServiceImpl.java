@@ -97,15 +97,19 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String districtName = (farmer.getDistrict() != null) ? farmer.getDistrict().getName() : null;
+        Long districtIdValue = (farmer.getDistrict() != null) ? farmer.getDistrict().getId() : null;
         String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
+        Long cropIdValue = (farmer.getCrop() != null) ? farmer.getCrop().getId() : null;
 
-        // Return LoginResponse using HEAD structure
+        // Return LoginResponse with districtId and cropId for frontend use
         return new LoginResponse(
                 farmer.getId(),
                 farmer.getName(),
                 farmer.getEmail(),
                 farmer.getPhone(),
+                districtIdValue,
                 districtName,
+                cropIdValue,
                 cropName,
                 null // Token logic not implemented yet
         );
