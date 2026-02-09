@@ -17,7 +17,7 @@ public class WeatherController {
     private final WeatherService weatherService;
 
     @GetMapping("/weather")
-    public ApiResponse<WeatherResponse> getWeather(@RequestParam Long districtId) {
+    public ApiResponse<WeatherResponse> getWeather(@RequestParam("districtId") Long districtId) {
         WeatherResponse weather = weatherService.getWeatherForDistrict(districtId);
         return new ApiResponse<>(true, "Weather data fetched successfully", weather);
     }
