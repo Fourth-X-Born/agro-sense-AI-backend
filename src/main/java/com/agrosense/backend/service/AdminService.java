@@ -41,4 +41,31 @@ public interface AdminService {
     void deleteFertilizer(Long id);
 
     List<FertilizerRecommendation> getAllFertilizers();
+
+    // CropDetails operations
+    CropDetails createCropDetails(AdminCropDetailsRequest request);
+
+    CropDetails updateCropDetails(Long id, AdminCropDetailsRequest request);
+
+    void deleteCropDetails(Long id);
+
+    List<CropDetails> getAllCropDetails();
+
+    // GrowthStage operations
+    GrowthStage createGrowthStage(AdminGrowthStageRequest request);
+
+    GrowthStage updateGrowthStage(Long id, AdminGrowthStageRequest request);
+
+    void deleteGrowthStage(Long id);
+
+    List<GrowthStage> getAllGrowthStages();
+
+    // CropGuideline operations
+    CropGuideline createCropGuideline(AdminCropGuidelineRequest request);
+
+    CropGuideline updateCropGuideline(Long id, AdminCropGuidelineRequest request);
+
+    void deleteCropGuideline(Long id);
+
+    List<CropGuideline> getAllCropGuidelines();
 }

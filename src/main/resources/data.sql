@@ -63,3 +63,122 @@ VALUES (8, 3, 'Calcium Ammonium Nitrate (CAN)', 'Nitrogen', '100-150 kg/ha', 'Fl
 INSERT IGNORE INTO fertilizer_recommendations (id, crop_id, fertilizer_name, fertilizer_type, dosage_per_hectare, application_stage, application_method, notes)
 VALUES (9, 3, 'Potassium Sulphate', 'Potassium', '75-100 kg/ha', 'Fruiting stage', 'Fertigation', 'Enhances fruit color and sugar content');
 
+-- =====================================================
+-- CROP GUIDE DATA
+-- =====================================================
+
+-- Seed Crop Details
+-- Rice (crop_id = 1)
+INSERT IGNORE INTO crop_details (crop_id, description, season_type, growth_duration_days, optimal_temperature, water_requirement, soil_ph, image_url)
+VALUES (1, 'Rice is the primary staple food in Sri Lanka, grown extensively in wet and dry zones. It requires flooded fields (paddies) during most of its growth cycle and thrives in warm, humid conditions.', 
+'Both', 100, '25-32°C', '5-10 cm standing water', '5.5-7.0', NULL);
+
+-- Maize (crop_id = 2)
+INSERT IGNORE INTO crop_details (crop_id, description, season_type, growth_duration_days, optimal_temperature, water_requirement, soil_ph, image_url)
+VALUES (2, 'Maize (corn) is a versatile crop used for human consumption, livestock feed, and industrial purposes. It grows well in well-drained soils with adequate moisture and warm temperatures.',
+'Both', 90, '21-30°C', 'Regular irrigation, 500-800mm', '5.8-7.0', NULL);
+
+-- Tomato (crop_id = 3)
+INSERT IGNORE INTO crop_details (crop_id, description, season_type, growth_duration_days, optimal_temperature, water_requirement, soil_ph, image_url)
+VALUES (3, 'Tomatoes are one of the most popular vegetables in Sri Lanka, grown throughout the year in different agro-ecological zones. They require moderate temperatures and consistent moisture.',
+'Both', 75, '20-27°C', 'Regular drip irrigation', '6.0-6.8', NULL);
+
+-- Seed Growth Stages for Rice
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (1, 1, 1, 'Seedling', 0, 14, 'Root development', 'Seeds germinate and develop into seedlings in the nursery. Focus on proper water management and protection from pests.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (2, 1, 2, 'Vegetative', 15, 55, 'Tillering', 'Plants are transplanted and develop tillers. This is the critical growth phase where the plant establishes its structure.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (3, 1, 3, 'Reproductive', 56, 85, 'Panicle formation', 'Panicles emerge and flowering occurs. Water management and pest control are critical during this stage.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (4, 1, 4, 'Ripening', 86, 100, 'Grain filling', 'Grains mature and ripen. Reduce water gradually and prepare for harvest.');
+
+-- Seed Growth Stages for Maize
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (5, 2, 1, 'Emergence', 0, 10, 'Germination', 'Seeds germinate and emerge from soil. Ensure adequate soil moisture for uniform emergence.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (6, 2, 2, 'Vegetative', 11, 50, 'Leaf development', 'Plant develops leaves and grows in height. Critical period for nitrogen application.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (7, 2, 3, 'Tasseling', 51, 65, 'Pollination', 'Tassel emerges and pollination occurs. Avoid water stress during this critical period.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (8, 2, 4, 'Grain Fill', 66, 90, 'Kernel development', 'Kernels develop and fill with starch. Continue irrigation and monitor for pests.');
+
+-- Seed Growth Stages for Tomato
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (9, 3, 1, 'Transplanting', 0, 14, 'Root establishment', 'Seedlings are transplanted to the field. Provide shade and adequate water for establishment.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (10, 3, 2, 'Vegetative', 15, 35, 'Plant growth', 'Plant develops foliage and structure. Stake plants and begin pest monitoring.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (11, 3, 3, 'Flowering', 36, 50, 'Flower development', 'Flowers appear and fruit set begins. Ensure proper pollination and calcium nutrition.');
+
+INSERT IGNORE INTO growth_stages (id, crop_id, stage_order, stage_name, start_day, end_day, focus_area, description)
+VALUES (12, 3, 4, 'Fruiting', 51, 75, 'Fruit development', 'Fruits develop and ripen. Regular harvesting encourages continued production.');
+
+-- Seed Crop Guidelines
+-- Rice DOs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (1, 1, NULL, 'DO', 'Maintain 5-10 cm standing water during vegetative and reproductive stages', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (2, 1, NULL, 'DO', 'Apply fertilizer when soil is moist but not flooded for better absorption', 2);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (3, 1, NULL, 'DO', 'Use certified seeds from approved sources for better germination and yield', 3);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (4, 1, NULL, 'DO', 'Practice crop rotation to break pest and disease cycles', 4);
+
+-- Rice DONTs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (5, 1, NULL, 'DONT', 'Do not apply Urea if heavy rain is expected within 24 hours', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (6, 1, NULL, 'DONT', 'Avoid draining fields completely during tillering stage', 2);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (7, 1, NULL, 'DONT', 'Do not over-apply nitrogen fertilizer as it promotes pest attack', 3);
+
+-- Maize DOs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (8, 2, NULL, 'DO', 'Plant in rows with proper spacing (75cm x 25cm) for optimal growth', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (9, 2, NULL, 'DO', 'Apply side dressing of nitrogen when plants are knee-high', 2);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (10, 2, NULL, 'DO', 'Control weeds early as maize is very sensitive to weed competition', 3);
+
+-- Maize DONTs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (11, 2, NULL, 'DONT', 'Do not allow water stress during tasseling and silking stages', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (12, 2, NULL, 'DONT', 'Avoid planting in waterlogged soils', 2);
+
+-- Tomato DOs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (13, 3, NULL, 'DO', 'Stake or cage plants to support fruit weight and improve air circulation', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (14, 3, NULL, 'DO', 'Apply calcium to prevent blossom end rot', 2);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (15, 3, NULL, 'DO', 'Harvest fruits regularly to encourage continued production', 3);
+
+-- Tomato DONTs
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (16, 3, NULL, 'DONT', 'Do not wet foliage when irrigating to prevent fungal diseases', 1);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (17, 3, NULL, 'DONT', 'Avoid planting in fields where solanaceous crops were grown recently', 2);
+
+INSERT IGNORE INTO crop_guidelines (id, crop_id, stage_id, guideline_type, description, priority)
+VALUES (18, 3, NULL, 'DONT', 'Do not over-irrigate as it causes root diseases and reduces fruit quality', 3);

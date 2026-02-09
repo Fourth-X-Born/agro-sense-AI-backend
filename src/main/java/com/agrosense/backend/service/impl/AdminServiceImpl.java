@@ -19,6 +19,9 @@ public class AdminServiceImpl implements AdminService {
     private final DistrictRepository districtRepository;
     private final MarketPriceRepository marketPriceRepository;
     private final FertilizerRecommendationRepository fertilizerRepository;
+    private final CropDetailsRepository cropDetailsRepository;
+    private final GrowthStageRepository growthStageRepository;
+    private final CropGuidelineRepository cropGuidelineRepository;
 
     // ==================== CROP OPERATIONS ====================
 
@@ -184,5 +187,166 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(readOnly = true)
     public List<FertilizerRecommendation> getAllFertilizers() {
         return fertilizerRepository.findAll();
+    }
+
+    // ==================== CROP DETAILS OPERATIONS ====================
+
+    @Override
+    public CropDetails createCropDetails(AdminCropDetailsRequest request) {
+        Crop crop = cropRepository.findById(request.getCropId())
+                .orElseThrow(() -> new EntityNotFoundException("Crop not found with id: " + request.getCropId()));
+
+        CropDetails details = CropDetails.builder()
+                .crop(crop)
+                .description(request.getDescription())
+                .seasonType(request.getSeasonType())
+                .growthDurationDays(request.getGrowthDurationDays())
+                .optimalTemperature(request.getOptimalTemperature())
+                .waterRequirement(request.getWaterRequirement())
+                .soilPH(request.getSoilPH())
+                .imageUrl(request.getImageUrl())
+                .build();
+        return cropDetailsRepository.save(details);
+    }
+
+    @Override
+    public CropDetails updateCropDetails(Long id, AdminCropDetailsRequest request) {
+        CropDetails details = cropDetailsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("CropDetails not found with id: " + id));
+
+        details.setDescription(request.getDescription());
+        details.setSeasonType(request.getSeasonType());
+        details.setGrowthDurationDays(request.getGrowthDurationDays());
+        details.setOptimalTemperature(request.getOptimalTemperature());
+        details.setWaterRequirement(request.getWaterRequirement());
+        details.setSoilPH(request.getSoilPH());
+        details.setImageUrl(request.getImageUrl());
+        return cropDetailsRepository.save(details);
+    }
+
+    @Override
+    public void deleteCropDetails(Long id) {
+        if (!cropDetailsRepository.existsById(id)) {
+            throw new EntityNotFoundException("CropDetails not found with id: " + id);
+        }
+        cropDetailsRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CropDetails> getAllCropDetails() {
+        return cropDetailsRepository.findAll();
+    }
+
+    // ==================== GROWTH STAGE OPERATIONS ====================
+
+    @Override
+    public GrowthStage createGrowthStage(AdminGrowthStageRequest request) {
+        Crop crop = cropRepository.findById(request.getCropId())
+                .orElseThrow(() -> new EntityNotFoundException("Crop not found with id: " + request.getCropId()));
+
+        GrowthStage stage = GrowthStage.builder()
+                .crop(crop)
+                .stageOrder(request.getStageOrder())
+                .stageName(request.getStageName())
+                .startDay(request.getStartDay())
+                .endDay(request.getEndDay())
+                .focusArea(request.getFocusArea())
+                .description(request.getDescription())
+                .build();
+        return growthStageRepository.save(stage);
+    }
+
+    @Override
+    public GrowthStage updateGrowthStage(Long id, AdminGrowthStageRequest request) {
+        GrowthStage stage = growthStageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("GrowthStage not found with id: " + id));
+
+        Crop crop = cropRepository.findById(request.getCropId())
+                .orElseThrow(() -> new EntityNotFoundException("Crop not found with id: " + request.getCropId()));
+
+        stage.setCrop(crop);
+        stage.setStageOrder(request.getStageOrder());
+        stage.setStageName(request.getStageName());
+        stage.setStartDay(request.getStartDay());
+        stage.setEndDay(request.getEndDay());
+        stage.setFocusArea(request.getFocusArea());
+        stage.setDescription(request.getDescription());
+        return growthStageRepository.save(stage);
+    }
+
+    @Override
+    public void deleteGrowthStage(Long id) {
+        if (!growthStageRepository.existsById(id)) {
+            throw new EntityNotFoundException("GrowthStage not found with id: " + id);
+        }
+        growthStageRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GrowthStage> getAllGrowthStages() {
+        return growthStageRepository.findAll();
+    }
+
+    // ==================== CROP GUIDELINE OPERATIONS ====================
+
+    @Override
+    public CropGuideline createCropGuideline(AdminCropGuidelineRequest request) {
+        Crop crop = cropRepository.findById(request.getCropId())
+                .orElseThrow(() -> new EntityNotFoundException("Crop not found with id: " + request.getCropId()));
+
+        GrowthStage stage = null;
+        if (request.getStageId() != null) {
+            stage = growthStageRepository.findById(request.getStageId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "GrowthStage not found with id: " + request.getStageId()));
+        }
+
+        CropGuideline guideline = CropGuideline.builder()
+                .crop(crop)
+                .stage(stage)
+                .guidelineType(request.getGuidelineType())
+                .description(request.getDescription())
+                .priority(request.getPriority())
+                .build();
+        return cropGuidelineRepository.save(guideline);
+    }
+
+    @Override
+    public CropGuideline updateCropGuideline(Long id, AdminCropGuidelineRequest request) {
+        CropGuideline guideline = cropGuidelineRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("CropGuideline not found with id: " + id));
+
+        Crop crop = cropRepository.findById(request.getCropId())
+                .orElseThrow(() -> new EntityNotFoundException("Crop not found with id: " + request.getCropId()));
+
+        GrowthStage stage = null;
+        if (request.getStageId() != null) {
+            stage = growthStageRepository.findById(request.getStageId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "GrowthStage not found with id: " + request.getStageId()));
+        }
+
+        guideline.setCrop(crop);
+        guideline.setStage(stage);
+        guideline.setGuidelineType(request.getGuidelineType());
+        guideline.setDescription(request.getDescription());
+        guideline.setPriority(request.getPriority());
+        return cropGuidelineRepository.save(guideline);
+    }
+
+    @Override
+    public void deleteCropGuideline(Long id) {
+        if (!cropGuidelineRepository.existsById(id)) {
+            throw new EntityNotFoundException("CropGuideline not found with id: " + id);
+        }
+        cropGuidelineRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CropGuideline> getAllCropGuidelines() {
+        return cropGuidelineRepository.findAll();
     }
 }
