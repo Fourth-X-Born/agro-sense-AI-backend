@@ -37,13 +37,15 @@ public class AuthServiceImpl implements AuthService {
         if (request.getPassword() == null || request.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password is required");
         }
-        if (request.getDistrictId() == null) {
-            throw new IllegalArgumentException("District ID is required");
-        }
 
-        Optional<District> districtOpt = districtRepository.findById(request.getDistrictId());
-        if (!districtOpt.isPresent()) {
-            throw new ResourceNotFoundException("District with ID " + request.getDistrictId() + " not found");
+        // District is now optional - can be set later in profile completion
+        District district = null;
+        if (request.getDistrictId() != null) {
+            Optional<District> districtOpt = districtRepository.findById(request.getDistrictId());
+            if (!districtOpt.isPresent()) {
+                throw new ResourceNotFoundException("District with ID " + request.getDistrictId() + " not found");
+            }
+            district = districtOpt.get();
         }
 
         if (request.getEmail() != null && farmerRepository.existsByEmail(request.getEmail())) {
@@ -60,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .passwordHash(passwordHash)
-                .district(districtOpt.get())
+                .district(district)
                 .build();
 
         Farmer savedFarmer = farmerRepository.save(farmer);
@@ -97,7 +99,9 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String districtName = (farmer.getDistrict() != null) ? farmer.getDistrict().getName() : null;
+        Long districtId = (farmer.getDistrict() != null) ? farmer.getDistrict().getId() : null;
         String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
+        Long cropId = (farmer.getCrop() != null) ? farmer.getCrop().getId() : null;
 
         // Return LoginResponse using HEAD structure
         return new LoginResponse(
@@ -105,8 +109,11 @@ public class AuthServiceImpl implements AuthService {
                 farmer.getName(),
                 farmer.getEmail(),
                 farmer.getPhone(),
+                districtId,
                 districtName,
+                cropId,
                 cropName,
+                farmer.getProfilePhoto(),
                 null // Token logic not implemented yet
         );
     }

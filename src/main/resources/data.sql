@@ -1,13 +1,33 @@
-INSERT IGNORE INTO districts (name) VALUES ('Ampara');
-INSERT IGNORE INTO districts (name) VALUES ('Anuradhapura');
-INSERT IGNORE INTO districts (name) VALUES ('Badulla');
-INSERT IGNORE INTO districts (name) VALUES ('Batticaloa');
-INSERT IGNORE INTO districts (name) VALUES ('Colombo');
-INSERT IGNORE INTO districts (name) VALUES ('Galle');
-INSERT IGNORE INTO districts (name) VALUES ('Gampaha');
-INSERT IGNORE INTO districts (name) VALUES ('Hambantota');
-INSERT IGNORE INTO districts (name) VALUES ('Jaffna');
-INSERT IGNORE INTO districts (name) VALUES ('Kalutara');
+-- Make district_id nullable for two-step registration flow
+ALTER TABLE farmers MODIFY COLUMN district_id BIGINT NULL;
+
+-- Insert all 25 Sri Lankan Districts in alphabetical order (ID 1-25)
+-- Using INSERT IGNORE to skip if already exists
+INSERT IGNORE INTO districts (id, name) VALUES (1, 'Ampara');
+INSERT IGNORE INTO districts (id, name) VALUES (2, 'Anuradhapura');
+INSERT IGNORE INTO districts (id, name) VALUES (3, 'Badulla');
+INSERT IGNORE INTO districts (id, name) VALUES (4, 'Batticaloa');
+INSERT IGNORE INTO districts (id, name) VALUES (5, 'Colombo');
+INSERT IGNORE INTO districts (id, name) VALUES (6, 'Galle');
+INSERT IGNORE INTO districts (id, name) VALUES (7, 'Gampaha');
+INSERT IGNORE INTO districts (id, name) VALUES (8, 'Hambantota');
+INSERT IGNORE INTO districts (id, name) VALUES (9, 'Jaffna');
+INSERT IGNORE INTO districts (id, name) VALUES (10, 'Kalutara');
+INSERT IGNORE INTO districts (id, name) VALUES (11, 'Kandy');
+INSERT IGNORE INTO districts (id, name) VALUES (12, 'Kegalle');
+INSERT IGNORE INTO districts (id, name) VALUES (13, 'Kilinochchi');
+INSERT IGNORE INTO districts (id, name) VALUES (14, 'Kurunegala');
+INSERT IGNORE INTO districts (id, name) VALUES (15, 'Mannar');
+INSERT IGNORE INTO districts (id, name) VALUES (16, 'Matale');
+INSERT IGNORE INTO districts (id, name) VALUES (17, 'Matara');
+INSERT IGNORE INTO districts (id, name) VALUES (18, 'Monaragala');
+INSERT IGNORE INTO districts (id, name) VALUES (19, 'Mullaitivu');
+INSERT IGNORE INTO districts (id, name) VALUES (20, 'Nuwara Eliya');
+INSERT IGNORE INTO districts (id, name) VALUES (21, 'Polonnaruwa');
+INSERT IGNORE INTO districts (id, name) VALUES (22, 'Puttalam');
+INSERT IGNORE INTO districts (id, name) VALUES (23, 'Ratnapura');
+INSERT IGNORE INTO districts (id, name) VALUES (24, 'Trincomalee');
+INSERT IGNORE INTO districts (id, name) VALUES (25, 'Vavuniya');
 
 -- Seed a test farmer (for Profile API testing)
 -- COMMENTED OUT: This used a plain-text password hash which breaks BCrypt login
