@@ -56,8 +56,9 @@
 
 ## Team
 
-*Team Name: Fourth X Born
-*Team Number: DEV - 55
+* **Team Name: Fourth X Born**
+
+* **Team Number: DEV - 55**
 
 ## Members
 
