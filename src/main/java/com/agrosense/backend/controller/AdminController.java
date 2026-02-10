@@ -2,6 +2,7 @@ package com.agrosense.backend.controller;
 
 import com.agrosense.backend.dto.admin.*;
 import com.agrosense.backend.entity.*;
+import com.agrosense.backend.repository.ContactMessageRepository;
 import com.agrosense.backend.service.AdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -16,6 +18,7 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
+    private final ContactMessageRepository contactMessageRepository;
 
     // ==================== CROP ENDPOINTS ====================
 
@@ -204,5 +207,59 @@ public class AdminController {
     @GetMapping("/farmers")
     public ResponseEntity<List<FarmerResponse>> getAllFarmers() {
         return ResponseEntity.ok(adminService.getAllFarmers());
+    }
+
+    // ==================== CONTACT MESSAGE ENDPOINTS ====================
+
+    @GetMapping("/contact-messages")
+    public ResponseEntity<List<ContactMessage>> getAllContactMessages() {
+        return ResponseEntity.ok(contactMessageRepository.findAllByOrderByCreatedAtDesc());
+    }
+
+    @GetMapping("/contact-messages/stats")
+    public ResponseEntity<Map<String, Object>> getContactMessageStats() {
+        long total = contactMessageRepository.count();
+        long newCount = contactMessageRepository.countNewMessages();
+        long readCount = contactMessageRepository.countReadMessages();
+        return ResponseEntity.ok(Map.of(
+                "total", total,
+                "new", newCount,
+                "read", readCount,
+                "responded", total - newCount - readCount
+        ));
+    }
+
+    @GetMapping("/contact-messages/{id}")
+    public ResponseEntity<ContactMessage> getContactMessage(@PathVariable("id") Long id) {
+        ContactMessage message = contactMessageRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Message not found"));
+        return ResponseEntity.ok(message);
+    }
+
+    @PutMapping("/contact-messages/{id}")
+    public ResponseEntity<ContactMessage> updateContactMessage(
+            @PathVariable("id") Long id,
+            @RequestBody AdminContactMessageUpdateRequest request) {
+        ContactMessage message = contactMessageRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Message not found"));
+
+        if (request.getStatus() != null) {
+            message.setStatus(ContactMessage.MessageStatus.valueOf(request.getStatus()));
+            if (request.getStatus().equals("RESPONDED")) {
+                message.setRespondedAt(LocalDateTime.now());
+            }
+        }
+        if (request.getAdminNotes() != null) {
+            message.setAdminNotes(request.getAdminNotes());
+        }
+
+        contactMessageRepository.save(message);
+        return ResponseEntity.ok(message);
+    }
+
+    @DeleteMapping("/contact-messages/{id}")
+    public ResponseEntity<Map<String, String>> deleteContactMessage(@PathVariable("id") Long id) {
+        contactMessageRepository.deleteById(id);
+        return ResponseEntity.ok(Map.of("message", "Contact message deleted successfully"));
     }
 }

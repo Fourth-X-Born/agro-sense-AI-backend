@@ -44,20 +44,55 @@ INSERT IGNORE INTO districts (id, name) VALUES (25, 'Vavuniya');
 -- WHERE NOT EXISTS (SELECT 1 FROM farmers WHERE id = 1);
 
 -- Seed Market Prices (crop_id, district_id, price_per_kg, price_date)
--- Rice prices (crop_id = 1)
+-- Rice prices (crop_id = 1) - Major rice producing districts
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (1, 1, 1, 150.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (2, 1, 2, 145.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (3, 1, 3, 148.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (100, 1, 5, 155.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (101, 1, 8, 142.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (102, 1, 11, 152.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (103, 1, 14, 147.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (104, 1, 21, 140.00, CURDATE());
 
--- Maize prices (crop_id = 2)
+-- Maize prices (crop_id = 2) - Various districts
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (4, 2, 1, 85.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (5, 2, 2, 82.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (6, 2, 3, 84.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (105, 2, 5, 90.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (106, 2, 8, 80.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (107, 2, 11, 87.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (108, 2, 14, 83.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (109, 2, 18, 78.00, CURDATE());
 
--- Tomato prices (crop_id = 3)
+-- Tomato prices (crop_id = 3) - Various districts
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (7, 3, 1, 220.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (8, 3, 2, 215.00, CURDATE());
 INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (9, 3, 3, 218.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (110, 3, 5, 250.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (111, 3, 6, 235.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (112, 3, 7, 245.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (113, 3, 11, 225.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (114, 3, 20, 195.00, CURDATE());
+
+-- Chili prices (crop_id = 4) - Various districts
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (115, 4, 1, 650.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (116, 4, 2, 620.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (117, 4, 3, 680.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (118, 4, 5, 720.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (119, 4, 8, 590.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (120, 4, 9, 640.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (121, 4, 11, 660.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (122, 4, 14, 615.00, CURDATE());
+
+-- Onion prices (crop_id = 5) - Various districts
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (123, 5, 1, 180.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (124, 5, 2, 175.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (125, 5, 3, 185.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (126, 5, 5, 210.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (127, 5, 6, 195.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (128, 5, 7, 200.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (129, 5, 9, 165.00, CURDATE());
+INSERT IGNORE INTO market_prices (id, crop_id, district_id, price_per_kg, price_date) VALUES (130, 5, 11, 190.00, CURDATE());
 
 -- Seed Fertilizer Recommendations
 -- Rice fertilizers (crop_id = 1)

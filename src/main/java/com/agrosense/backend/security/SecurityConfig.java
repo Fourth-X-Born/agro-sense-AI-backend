@@ -26,6 +26,7 @@ public class SecurityConfig {
                                                                 "/api/fertilizers/**",
                                                                 "/api/risk/**",
                                                                 "/api/crop-guide/**",
+                                                                "/api/contact/**",
                                                                 "/api/admin/**")
                                                 .permitAll()
                                                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
