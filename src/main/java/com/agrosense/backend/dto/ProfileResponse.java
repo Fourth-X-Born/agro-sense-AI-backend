@@ -8,5 +8,6 @@ public record ProfileResponse(
         Long districtId,
         String districtName,
         Long cropId,
-        String cropName
+        String cropName,
+        String profilePhoto
 ) {}

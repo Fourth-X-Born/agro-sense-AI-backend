@@ -31,10 +31,13 @@ public class Farmer {
     private String passwordHash;
 
     @ManyToOne
-    @JoinColumn(name = "district_id", nullable = false)
-    private District district;
+    @JoinColumn(name = "district_id")
+    private District district; // optional, can be set later
 
     @ManyToOne
     @JoinColumn(name = "crop_id")
     private Crop crop;
+
+    @Column(name = "profile_photo")
+    private String profilePhoto; // URL or path to profile photo
 }

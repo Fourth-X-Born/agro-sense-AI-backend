@@ -9,10 +9,11 @@ public class LoginResponse {
     private String district;
     private Long cropId;
     private String crop;
+    private String profilePhoto;
     private String token; // For future JWT use, currently can be null or a dummy token
 
     public LoginResponse(Long id, String name, String email, String phone, Long districtId, String district,
-            Long cropId, String crop, String token) {
+            Long cropId, String crop, String profilePhoto, String token) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -21,6 +22,7 @@ public class LoginResponse {
         this.district = district;
         this.cropId = cropId;
         this.crop = crop;
+        this.profilePhoto = profilePhoto;
         this.token = token;
     }
 
@@ -87,6 +89,14 @@ public class LoginResponse {
 
     public void setCrop(String crop) {
         this.crop = crop;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     public String getToken() {
