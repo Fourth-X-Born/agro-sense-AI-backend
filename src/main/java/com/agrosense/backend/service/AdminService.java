@@ -71,4 +71,15 @@ public interface AdminService {
 
     // Farmer operations (read-only for admin)
     List<FarmerResponse> getAllFarmers();
+
+    // Contact message operations
+    List<ContactMessage> getAllContactMessages();
+
+    java.util.Map<String, Object> getContactMessageStats();
+
+    ContactMessage getContactMessage(Long id);
+
+    ContactMessage updateContactMessage(Long id, AdminContactMessageUpdateRequest request);
+
+    void deleteContactMessage(Long id);
 }

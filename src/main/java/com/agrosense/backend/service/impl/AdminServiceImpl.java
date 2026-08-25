@@ -23,6 +23,7 @@ public class AdminServiceImpl implements AdminService {
     private final GrowthStageRepository growthStageRepository;
     private final CropGuidelineRepository cropGuidelineRepository;
     private final FarmerRepository farmerRepository;
+    private final ContactMessageRepository contactMessageRepository;
 
     // ==================== CROP OPERATIONS ====================
 
@@ -359,5 +360,59 @@ public class AdminServiceImpl implements AdminService {
         return farmerRepository.findAllWithValidRelations().stream()
                 .map(FarmerResponse::fromEntity)
                 .toList();
+    }
+
+    // ==================== CONTACT MESSAGE OPERATIONS ====================
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ContactMessage> getAllContactMessages() {
+        return contactMessageRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public java.util.Map<String, Object> getContactMessageStats() {
+        long total = contactMessageRepository.count();
+        long newCount = contactMessageRepository.countNewMessages();
+        long readCount = contactMessageRepository.countReadMessages();
+        return java.util.Map.of(
+                "total", total,
+                "new", newCount,
+                "read", readCount,
+                "responded", total - newCount - readCount);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ContactMessage getContactMessage(Long id) {
+        return contactMessageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Contact message not found with id: " + id));
+    }
+
+    @Override
+    public ContactMessage updateContactMessage(Long id, AdminContactMessageUpdateRequest request) {
+        ContactMessage message = contactMessageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Contact message not found with id: " + id));
+
+        if (request.getStatus() != null) {
+            message.setStatus(ContactMessage.MessageStatus.valueOf(request.getStatus()));
+            if (request.getStatus().equals("RESPONDED")) {
+                message.setRespondedAt(java.time.LocalDateTime.now());
+            }
+        }
+        if (request.getAdminNotes() != null) {
+            message.setAdminNotes(request.getAdminNotes());
+        }
+
+        return contactMessageRepository.save(message);
+    }
+
+    @Override
+    public void deleteContactMessage(Long id) {
+        if (!contactMessageRepository.existsById(id)) {
+            throw new EntityNotFoundException("Contact message not found with id: " + id);
+        }
+        contactMessageRepository.deleteById(id);
     }
 }
