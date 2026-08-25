@@ -40,3 +40,6 @@ src/main/resources/application-local.properties
 
 # Environment variables file (contains secrets)
 .env
+
+# Stray build/run logs (should never be committed)
+*.log
