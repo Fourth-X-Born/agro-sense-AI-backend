@@ -11,6 +11,7 @@ import com.agrosense.backend.repository.DistrictRepository;
 import com.agrosense.backend.service.AuthService;
 import com.agrosense.backend.dto.LoginRequest;
 import com.agrosense.backend.dto.LoginResponse;
+import com.agrosense.backend.security.JwtService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,8 @@ public class AuthServiceImpl implements AuthService {
     private final FarmerRepository farmerRepository;
 
     private final DistrictRepository districtRepository;
+
+    private final JwtService jwtService;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -102,6 +105,8 @@ public class AuthServiceImpl implements AuthService {
         String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
         Long cropId = (farmer.getCrop() != null) ? farmer.getCrop().getId() : null;
 
+        String token = jwtService.generateToken(farmer.getId(), farmer.getEmail(), "FARMER");
+
         // Return LoginResponse with districtId and cropId for frontend use
         return new LoginResponse(
                 farmer.getId(),
@@ -113,7 +118,7 @@ public class AuthServiceImpl implements AuthService {
                 cropId,
                 cropName,
                 farmer.getProfilePhoto(),
-                null // Token logic not implemented yet
+                token
         );
     }
 }
