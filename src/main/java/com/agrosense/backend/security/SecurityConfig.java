@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/api/fertilizers/**")
                         .permitAll()
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/api/profile/**", "/api/risk/**").authenticated()
+                        .requestMatchers("/api/profile/**", "/api/risk/**").hasRole("FARMER")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

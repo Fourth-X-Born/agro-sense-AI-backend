@@ -1,5 +1,6 @@
 package com.agrosense.backend.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,21 +27,24 @@ public class ProfileController {
     private final ProfileService profileService;
 
     @GetMapping("/get")
-    public ApiResponse<ProfileResponse> getProfile(@RequestParam Long farmerId) {
+    public ApiResponse<ProfileResponse> getProfile(Authentication authentication) {
+        Long farmerId = (Long) authentication.getPrincipal();
         return new ApiResponse<>(true, "Profile fetched", profileService.getProfile(farmerId));
     }
 
     @PutMapping("/update")
     public ApiResponse<ProfileResponse> updateProfile(
-            @RequestParam Long farmerId,
+            Authentication authentication,
             @RequestBody ProfileUpdateRequest request) {
+        Long farmerId = (Long) authentication.getPrincipal();
         return new ApiResponse<>(true, "Profile updated", profileService.updateProfile(farmerId, request));
     }
 
     @PostMapping("/photo/upload")
     public ApiResponse<ProfileResponse> uploadPhoto(
-            @RequestParam Long farmerId,
+            Authentication authentication,
             @RequestParam("file") MultipartFile file) {
+        Long farmerId = (Long) authentication.getPrincipal();
         // Validate file type
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
@@ -54,14 +58,16 @@ public class ProfileController {
     }
 
     @DeleteMapping("/photo/delete")
-    public ApiResponse<ProfileResponse> deletePhoto(@RequestParam Long farmerId) {
+    public ApiResponse<ProfileResponse> deletePhoto(Authentication authentication) {
+        Long farmerId = (Long) authentication.getPrincipal();
         return new ApiResponse<>(true, "Photo deleted successfully", profileService.deleteProfilePhoto(farmerId));
     }
 
     @PutMapping("/change-password")
     public ApiResponse<Void> changePassword(
-            @RequestParam Long farmerId,
+            Authentication authentication,
             @RequestBody PasswordChangeRequest request) {
+        Long farmerId = (Long) authentication.getPrincipal();
         try {
             profileService.changePassword(farmerId, request.currentPassword(), request.newPassword());
             return new ApiResponse<>(true, "Password changed successfully", null);
