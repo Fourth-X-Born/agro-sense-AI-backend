@@ -12,22 +12,21 @@ import com.agrosense.backend.service.AuthService;
 import com.agrosense.backend.dto.LoginRequest;
 import com.agrosense.backend.dto.LoginResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private FarmerRepository farmerRepository;
+    private final FarmerRepository farmerRepository;
 
-    @Autowired
-    private DistrictRepository districtRepository;
+    private final DistrictRepository districtRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public RegisterResponse register(RegisterRequest request) {

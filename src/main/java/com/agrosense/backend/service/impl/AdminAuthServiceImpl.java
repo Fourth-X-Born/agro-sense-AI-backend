@@ -10,19 +10,19 @@ import com.agrosense.backend.exception.ResourceNotFoundException;
 import com.agrosense.backend.repository.AdminRepository;
 import com.agrosense.backend.service.AdminAuthService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AdminAuthServiceImpl implements AdminAuthService {
 
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public AdminRegisterResponse register(AdminRegisterRequest request) {
