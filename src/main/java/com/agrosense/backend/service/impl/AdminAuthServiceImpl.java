@@ -9,20 +9,23 @@ import com.agrosense.backend.exception.DuplicateResourceException;
 import com.agrosense.backend.exception.ResourceNotFoundException;
 import com.agrosense.backend.repository.AdminRepository;
 import com.agrosense.backend.service.AdminAuthService;
+import com.agrosense.backend.security.JwtService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AdminAuthServiceImpl implements AdminAuthService {
 
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final JwtService jwtService;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public AdminRegisterResponse register(AdminRegisterRequest request) {
@@ -103,6 +106,8 @@ public class AdminAuthServiceImpl implements AdminAuthService {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
+        String token = jwtService.generateToken(admin.getId(), admin.getEmail(), admin.getRole());
+
         // Return login response
         return AdminLoginResponse.builder()
                 .id(admin.getId())
@@ -110,7 +115,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
                 .email(admin.getEmail())
                 .phone(admin.getPhone())
                 .role(admin.getRole())
-                .token("admin-session-" + admin.getId()) // Simple token for now
+                .token(token)
                 .build();
     }
 }

@@ -11,23 +11,25 @@ import com.agrosense.backend.repository.DistrictRepository;
 import com.agrosense.backend.service.AuthService;
 import com.agrosense.backend.dto.LoginRequest;
 import com.agrosense.backend.dto.LoginResponse;
+import com.agrosense.backend.security.JwtService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private FarmerRepository farmerRepository;
+    private final FarmerRepository farmerRepository;
 
-    @Autowired
-    private DistrictRepository districtRepository;
+    private final DistrictRepository districtRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final JwtService jwtService;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -103,6 +105,8 @@ public class AuthServiceImpl implements AuthService {
         String cropName = (farmer.getCrop() != null) ? farmer.getCrop().getName() : null;
         Long cropId = (farmer.getCrop() != null) ? farmer.getCrop().getId() : null;
 
+        String token = jwtService.generateToken(farmer.getId(), farmer.getEmail(), "FARMER");
+
         // Return LoginResponse with districtId and cropId for frontend use
         return new LoginResponse(
                 farmer.getId(),
@@ -114,7 +118,7 @@ public class AuthServiceImpl implements AuthService {
                 cropId,
                 cropName,
                 farmer.getProfilePhoto(),
-                null // Token logic not implemented yet
+                token
         );
     }
 }

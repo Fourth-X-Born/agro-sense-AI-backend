@@ -6,6 +6,7 @@ import com.agrosense.backend.dto.risk.RiskAnalyzeResponse;
 import com.agrosense.backend.dto.risk.RiskHistoryItemDto;
 import com.agrosense.backend.service.RiskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,14 @@ public class RiskController {
     private final RiskService riskService;
 
     @PostMapping("/analyze")
-    public ApiResponse<RiskAnalyzeResponse> analyze(@RequestBody RiskAnalyzeRequest request) {
+    public ApiResponse<RiskAnalyzeResponse> analyze(Authentication authentication, @RequestBody RiskAnalyzeRequest request) {
+        request.setFarmerId((Long) authentication.getPrincipal());
         return new ApiResponse<>(true, "Risk analysis complete", riskService.analyze(request));
     }
 
     @GetMapping("/history")
-    public ApiResponse<List<RiskHistoryItemDto>> history(@RequestParam Long farmerId) {
+    public ApiResponse<List<RiskHistoryItemDto>> history(Authentication authentication) {
+        Long farmerId = (Long) authentication.getPrincipal();
         return new ApiResponse<>(true, "Risk history fetched", riskService.history(farmerId));
     }
 }

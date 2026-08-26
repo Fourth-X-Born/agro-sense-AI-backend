@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RiskAnalyzeRequest {
-    private Long farmerId; // optional for now
+    private Long farmerId; // overwritten server-side from the authenticated JWT; client value is ignored
     private Long cropId;
     private Long districtId;
 }

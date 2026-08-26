@@ -13,27 +13,24 @@
    * Ensure your local MySQL server is running.
    * Create a database named `agrosense_db`.
 
-2. **Application Properties**
+2. **Environment Variables (.env)**
 
-   * The application relies on `src/main/resources/application.properties`.
-   * For local development, ensure `spring.profiles.active=local` is set (or manually uncomment local settings).
+   * All secrets (DB credentials, API keys) are read from environment variables — nothing is hardcoded in `application.properties`.
+   * Copy `.env.example` to `.env` in the project root and fill in real values:
 
-   **Local Credentials (Example):**
+     ```env
+     DB_URL=jdbc:mysql://localhost:3306/agrosense_db
+     DB_USERNAME=root
+     DB_PASSWORD=your_local_mysql_password
 
-   ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/agrosense_db
-   spring.datasource.username=root
-   spring.datasource.password=YOUR_PASSWORD
-   ```
+     WEATHER_API_KEY=your_openweathermap_api_key
 
-3. **Environment Variables (.env)**
-
-   * Create a `.env` file in the root directory if it doesn't exist.
-   * Required variables:
-
+     CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+     CLOUDINARY_API_KEY=your_cloudinary_api_key
+     CLOUDINARY_API_SECRET=your_cloudinary_api_secret
      ```
-     OPENWEATHER_API_KEY=your_openweather_api_key
-     ```
+
+   * `.env` is gitignored and loaded automatically on startup (see `AgrosenseBackendApplication.main`) — no extra setup needed beyond creating the file.
 
 ## Running the Application
 
