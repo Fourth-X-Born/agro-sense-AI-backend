@@ -71,7 +71,7 @@ mvn spring-boot:run
 
 ### Deployment
 
-Configured for deployment on Railway (`Procfile`, `application-railway.properties`, which reads DB credentials from Railway's auto-injected `MYSQL*` variables). Any platform that can run a Spring Boot jar with environment variables works equally well.
+Configured for deployment on Render (Build Command: `mvn clean package -DskipTests`, Start Command: `java -Dserver.port=$PORT -jar target/*.jar`). Environment variables (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `WEATHER_API_KEY`, `CLOUDINARY_*`, `JWT_SECRET`) are configured in the Render web dashboard.
 
 ## Team
 
