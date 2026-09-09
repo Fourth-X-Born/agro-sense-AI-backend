@@ -1,4 +1,4 @@
-# AgroSense AI - Backend
+# AgroSense - Backend
 
 Spring Boot REST API powering AgroSense AI, an intelligent agricultural decision-support web platform built for Sri Lankan farmers. It serves weather-driven crop risk analysis, market prices, crop cultivation guides, fertilizer recommendations, and a full admin management panel, all behind JWT-secured endpoints.
 
