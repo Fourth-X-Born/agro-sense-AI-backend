@@ -42,26 +42,26 @@ public class ProfileServiceImpl implements ProfileService {
                 .orElseThrow(() -> new RuntimeException("Farmer not found: " + farmerId));
 
         // Update name if provided
-        if (request.name() != null && !request.name().isBlank()) {
-            farmer.setName(request.name());
+        if (request.getName() != null && !request.getName().isBlank()) {
+            farmer.setName(request.getName());
         }
 
         // Update phone if provided
-        if (request.phone() != null && !request.phone().isBlank()) {
-            farmer.setPhone(request.phone());
+        if (request.getPhone() != null && !request.getPhone().isBlank()) {
+            farmer.setPhone(request.getPhone());
         }
 
         // Update district if provided
-        if (request.districtId() != null) {
-            District district = districtRepository.findById(request.districtId())
-                    .orElseThrow(() -> new RuntimeException("District not found: " + request.districtId()));
+        if (request.getDistrictId() != null) {
+            District district = districtRepository.findById(request.getDistrictId())
+                    .orElseThrow(() -> new RuntimeException("District not found: " + request.getDistrictId()));
             farmer.setDistrict(district);
         }
 
         // Update crop (can be null to remove crop)
-        if (request.cropId() != null) {
-            Crop crop = cropRepository.findById(request.cropId())
-                    .orElseThrow(() -> new RuntimeException("Crop not found: " + request.cropId()));
+        if (request.getCropId() != null) {
+            Crop crop = cropRepository.findById(request.getCropId())
+                    .orElseThrow(() -> new RuntimeException("Crop not found: " + request.getCropId()));
             farmer.setCrop(crop);
         }
 

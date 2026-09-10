@@ -1,6 +1,10 @@
-# AgroSense - Backend
+# AgroSense AI - Backend
+
+**Live Web:** `https://agrosense-web.netlify.app`
 
 Spring Boot REST API powering AgroSense AI, an intelligent agricultural decision-support web platform built for Sri Lankan farmers. It serves weather-driven crop risk analysis, market prices, crop cultivation guides, fertilizer recommendations, and a full admin management panel, all behind JWT-secured endpoints.
+
+**Live API Endpoint:** `https://agro-sense-backend-km1l.onrender.com/api`
 
 ## What it does
 
@@ -15,9 +19,11 @@ Spring Boot REST API powering AgroSense AI, an intelligent agricultural decision
 
 ## Tech stack
 
-- **Java 17**, **Spring Boot 4** (Web, Data JPA, Security, Validation)
+- **Java 17**, **Spring Boot 3** (Web, Data JPA, Security, Validation)
 - **MySQL** (via `mysql-connector-j`)
 - **JWT authentication**: [`jjwt`](https://github.com/jwtk/jjwt), stateless sessions, role-based route protection (`FARMER` / `ADMIN` / `SUPER_ADMIN`)
+- **Jakarta Bean Validation**: Strict data integrity using standard annotations (`@NotBlank`, `@Email`, `@Pattern`) with a unified field-level error response format mapped by `GlobalExceptionHandler`.
+- **Docker**: Fully containerized with a multi-stage `Dockerfile` for streamlined builds and deployments.
 - **Cloudinary** for profile photo storage
 - **springdoc-openapi** for Swagger UI
 - **Lombok**, **dotenv-java** (loads a local `.env` file into the JVM at startup)
@@ -71,7 +77,11 @@ mvn spring-boot:run
 
 ### Deployment
 
-Configured for deployment on Railway (`Procfile`, `application-railway.properties`, which reads DB credentials from Railway's auto-injected `MYSQL*` variables). Any platform that can run a Spring Boot jar with environment variables works equally well.
+Configured for containerized deployment on platforms like Render or Railway. 
+It includes a multi-stage `Dockerfile` that builds the application using Maven and runs it using the lightweight OpenJDK slim runtime.
+
+To deploy on Render, create a new **Web Service**, select **Docker** as the environment, and configure the following environment variables in the Render dashboard:
+`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `WEATHER_API_KEY`, `CLOUDINARY_*`, `JWT_SECRET`.
 
 ## Team
 
