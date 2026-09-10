@@ -1,8 +1,8 @@
-# AgroSense AI - Backend
+# AgroSense - Backend
 
 **Live Web:** `https://agrosense-web.netlify.app`
 
-Spring Boot REST API powering AgroSense AI, an intelligent agricultural decision-support web platform built for Sri Lankan farmers. It serves weather-driven crop risk analysis, market prices, crop cultivation guides, fertilizer recommendations, and a full admin management panel, all behind JWT-secured endpoints.
+Spring Boot REST API powering AgroSense, an agricultural decision-support web platform built for Sri Lankan farmers. It serves weather-driven crop risk analysis, market prices, crop cultivation guides, fertilizer recommendations, and a full admin management panel, all behind JWT-secured endpoints.
 
 **Live API Endpoint:** `https://agro-sense-backend-km1l.onrender.com/api`
 
@@ -91,4 +91,4 @@ Fourth X Born, DEV-55
 - Isuru Adikaram
 - Ashen Randira
 - Dileepa Prabhath
-- Chanuka Ushan
+- Chanuka Bandara
