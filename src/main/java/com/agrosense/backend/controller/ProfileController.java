@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.validation.Valid;
 
 import com.agrosense.backend.dto.ApiResponse;
 import com.agrosense.backend.dto.PasswordChangeRequest;
@@ -35,7 +36,7 @@ public class ProfileController {
     @PutMapping("/update")
     public ApiResponse<ProfileResponse> updateProfile(
             Authentication authentication,
-            @RequestBody ProfileUpdateRequest request) {
+            @Valid @RequestBody ProfileUpdateRequest request) {
         Long farmerId = (Long) authentication.getPrincipal();
         return new ApiResponse<>(true, "Profile updated", profileService.updateProfile(farmerId, request));
     }
@@ -66,10 +67,10 @@ public class ProfileController {
     @PutMapping("/change-password")
     public ApiResponse<Void> changePassword(
             Authentication authentication,
-            @RequestBody PasswordChangeRequest request) {
+            @Valid @RequestBody PasswordChangeRequest request) {
         Long farmerId = (Long) authentication.getPrincipal();
         try {
-            profileService.changePassword(farmerId, request.currentPassword(), request.newPassword());
+            profileService.changePassword(farmerId, request.getCurrentPassword(), request.getNewPassword());
             return new ApiResponse<>(true, "Password changed successfully", null);
         } catch (IllegalArgumentException e) {
             return new ApiResponse<>(false, e.getMessage(), null);
